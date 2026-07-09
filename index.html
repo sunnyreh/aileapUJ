@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Leap User Journey</title>
+  <style>
+    :root {
+      --pwc-orange: #eb8c00;
+      --pwc-tangerine: #ffb600;
+      --pwc-red: #e0301e;
+      --pwc-rose: #db536a;
+      --ink: #161616;
+      --muted: #5f6470;
+      --line: #d9dde5;
+      --panel: #ffffff;
+      --soft: #f5f6f8;
+      --soft-orange: #fff4e3;
+      --soft-red: #fff0ee;
+      --shadow: 0 20px 50px rgba(22, 22, 22, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top left, #fff4e3 0, #ffffff 30%, #f7f8fa 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--pwc-orange), var(--pwc-red));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 21px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(224, 48, 30, 0.24);
+    }
+
+    .status-pill {
+      padding: 9px 13px;
+      border: 1px solid rgba(22, 22, 22, 0.12);
+      background: rgba(255,255,255,0.72);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.76));
+      border: 1px solid rgba(22, 22, 22, 0.08);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      right: -150px;
+      top: -140px;
+      background: radial-gradient(circle, rgba(235,140,0,0.32), rgba(235,140,0,0));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      padding: 42px 42px 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      color: var(--pwc-red);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 0.98;
+      margin: 0 0 18px;
+      max-width: 920px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy {
+      max-width: 900px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      text-decoration: none;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .button.primary {
+      background: var(--ink);
+      color: white;
+      box-shadow: 0 10px 25px rgba(22, 22, 22, 0.18);
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--ink);
+      border: 1px solid rgba(22,22,22,0.12);
+    }
+
+    .button:hover, .button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(22, 22, 22, 0.16);
+      outline: none;
+    }
+
+    .section {
+      margin-top: 26px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(22, 22, 22, 0.08);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 14px 32px rgba(22, 22, 22, 0.08);
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 26px 28px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(22, 22, 22, 0.08);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.48;
+      max-width: 800px;
+      font-size: 15px;
+    }
+
+    .view-toggle {
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      border: 1px solid rgba(22,22,22,0.08);
+    }
+
+    .toggle-btn {
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .toggle-btn.active {
+      background: white;
+      color: var(--ink);
+      box-shadow: 0 4px 14px rgba(22, 22, 22, 0.08);
+    }
+
+    .common-grid {
+      padding: 26px 28px 30px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .journey-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      position: relative;
+    }
+
+    .step-card, .route-card, .entry-card, .mini-card {
+      border: 1px solid rgba(22,22,22,0.10);
+      border-radius: var(--radius-md);
+      background: white;
+      padding: 17px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      min-height: 150px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .step-card:hover, .route-card:hover, .entry-card:hover, .mini-card:hover,
+    .step-card:focus-visible, .route-card:focus-visible, .entry-card:focus-visible, .mini-card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(22,22,22,0.12);
+      border-color: rgba(235,140,0,0.62);
+      outline: none;
+    }
+
+    .step-card.active, .route-card.active, .entry-card.active, .mini-card.active {
+      border-color: var(--pwc-orange);
+      background: linear-gradient(180deg, #ffffff, #fff8ed);
+      box-shadow: 0 14px 30px rgba(235,140,0,0.18);
+    }
+
+    .step-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      color: white;
+      background: var(--ink);
+      font-weight: 800;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .step-card.active .step-no,
+    .route-card.active .step-no,
+    .entry-card.active .step-no,
+    .mini-card.active .step-no {
+      background: var(--pwc-orange);
+    }
+
+    .card-title {
+      margin: 0 0 8px;
+      font-weight: 800;
+      line-height: 1.2;
+      font-size: 16px;
+    }
+
+    .card-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.42;
+    }
+
+    .detail-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      background: var(--soft);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(22,22,22,0.08);
+      padding: 18px;
+      min-height: 210px;
+    }
+
+    .detail-main, .detail-side {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid rgba(22,22,22,0.08);
+    }
+
+    .detail-label {
+      color: var(--pwc-red);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .detail-title {
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .detail-copy {
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 16px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .meta-box {
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      background: #fafafa;
+      border: 1px solid rgba(22,22,22,0.08);
+    }
+
+    .meta-title {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .meta-text {
+      font-size: 13.5px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .entry-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .entry-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .entry-card {
+      min-height: auto;
+    }
+
+    .entry-card .step-no {
+      width: auto;
+      min-width: 42px;
+      padding: 0 8px;
+    }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .route-card {
+      min-height: 176px;
+    }
+
+    .route-card[data-route="studio"] .step-no { background: var(--pwc-orange); }
+    .route-card[data-route="hackathon"] .step-no { background: var(--pwc-red); }
+    .route-card[data-route="sme"] .step-no { background: #714b67; }
+    .route-card[data-route="self"] .step-no { background: #2d6a4f; }
+    .route-card[data-route="backlog"] .step-no { background: #6c757d; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 18px 28px 0;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border: 1px solid rgba(22,22,22,0.10);
+      background: white;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+
+    .route-section-body {
+      padding: 20px 28px 30px;
+    }
+
+    .route-intro {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .callout {
+      border-radius: var(--radius-md);
+      background: var(--soft-orange);
+      border: 1px solid rgba(235,140,0,0.22);
+      padding: 18px;
+    }
+
+    .callout.red {
+      background: var(--soft-red);
+      border-color: rgba(224,48,30,0.20);
+    }
+
+    .callout h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .callout p {
+      margin: 0;
+      line-height: 1.5;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .route-journey {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .hackathon-journey {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .mini-card {
+      min-height: 164px;
+    }
+
+    .mini-card .step-no {
+      width: auto;
+      padding: 0 8px;
+    }
+
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: white;
+      border: 1px solid rgba(22,22,22,0.08);
+    }
+
+    .criteria-table th, .criteria-table td {
+      text-align: left;
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(22,22,22,0.08);
+      vertical-align: top;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .criteria-table th {
+      background: var(--ink);
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .criteria-table tr:last-child td { border-bottom: 0; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid rgba(22,22,22,0.08);
+      padding: 7px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .route-content { display: none; }
+    .route-content.active { display: block; }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+      margin: 26px auto 0;
+      max-width: 820px;
+    }
+
+    .flow-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #101010;
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 15px 16px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .flow-note strong { color: var(--pwc-tangerine); }
+
+    .icon-dot {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--pwc-orange);
+      font-weight: 900;
+    }
+
+    @media (max-width: 1050px) {
+      .journey-strip, .route-grid, .route-journey, .hackathon-journey {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .detail-panel, .entry-wrap, .route-intro {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 14px; }
+      .hero-inner { padding: 28px 22px; }
+      .section-header { flex-direction: column; padding: 22px 18px 14px; }
+      .common-grid, .route-section-body { padding: 20px 18px 24px; }
+      .tabs { padding: 16px 18px 0; }
+      .journey-strip, .route-grid, .route-journey, .hackathon-journey, .meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      h1 { font-size: 38px; }
+      .hero-copy { font-size: 16px; }
+      .criteria-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar" aria-label="Page header">
+      <div class="brand">
+        <div class="mark">AI</div>
+        <div>
+          <div>AI Leap</div>
+          <div style="font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 2px;">User journey prototype</div>
+        </div>
+      </div>
+      <div class="status-pill">Interactive HTML concept | Studio, Hackathon, SME and self-serve routing</div>
+    </div>
+
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="eyebrow">From idea to impact</div>
+        <h1>Bring an AI idea to life with AI Leap</h1>
+        <p class="hero-copy">Teams start with a real client, delivery or internal problem. AI Leap helps them shape the idea, check readiness, and route it to the right path: self-serve guidance, SME support, Leap Studio or a Leap Hackathon.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#common">Explore the journey</a>
+          <a class="button secondary" href="#routes">Compare support routes</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="common">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Common journey before the route is chosen</h2>
+          <p class="section-subtitle">The team does not need to know upfront whether Studio or Hackathon is right. The route depends on readiness, support need, timing, theme fit, urgency and ownership.</p>
+        </div>
+        <div class="view-toggle" aria-label="Toggle journey view">
+          <button class="toggle-btn active" data-view="user">User view</button>
+          <button class="toggle-btn" data-view="ops">Leap team view</button>
+        </div>
+      </div>
+      <div class="common-grid">
+        <div class="journey-strip" aria-label="Common journey stages">
+          <button class="step-card active" data-common="spot">
+            <span class="step-no">1</span>
+            <h3 class="card-title">Spot opportunity</h3>
+            <p class="card-copy">A team sees a real pain point where AI might help.</p>
+          </button>
+          <button class="step-card" data-common="shape">
+            <span class="step-no">2</span>
+            <h3 class="card-title">Shape the idea</h3>
+            <p class="card-copy">The team frames the problem, users, value and possible AI angle.</p>
+          </button>
+          <button class="step-card" data-common="entry">
+            <span class="step-no">3</span>
+            <h3 class="card-title">Find entry point</h3>
+            <p class="card-copy">They reach AI Leap through the Hub, a Hackathon announcement or a referral.</p>
+          </button>
+          <button class="step-card" data-common="readiness">
+            <span class="step-no">4</span>
+            <h3 class="card-title">Check fit and readiness</h3>
+            <p class="card-copy">The idea is tested against value, feasibility, risk, data, tools and support needs.</p>
+          </button>
+          <button class="step-card" data-common="route">
+            <span class="step-no">5</span>
+            <h3 class="card-title">Route to support</h3>
+            <p class="card-copy">AI Leap recommends the next best path.</p>
+          </button>
+        </div>
+
+        <div class="detail-panel" aria-live="polite">
+          <div class="detail-main">
+            <div class="detail-label" id="detailLabel">User question</div>
+            <h3 class="detail-title" id="detailTitle">Where could AI help us solve a real problem?</h3>
+            <p class="detail-copy" id="detailCopy">The journey starts with a specific client, delivery or internal pain point, not with a technology experiment. The team should identify where work is slow, repetitive, inconsistent, hard to scale or difficult to quality check.</p>
+            <div class="tag-row" id="detailTags">
+              <span class="tag">Client problem</span><span class="tag">Delivery pain point</span><span class="tag">Internal workflow</span>
+            </div>
+          </div>
+          <div class="detail-side">
+            <div class="meta-grid">
+              <div class="meta-box">
+                <div class="meta-title">Team action</div>
+                <p class="meta-text" id="teamAction">Capture the pain point, affected users and why it matters.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Leap support</div>
+                <p class="meta-text" id="leapAction">No formal support yet. The model encourages problem-first thinking.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Output</div>
+                <p class="meta-text" id="outputText">Initial problem statement.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Watchout</div>
+                <p class="meta-text" id="watchoutText">Avoid starting with a tool looking for a problem.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry-wrap" id="entryPoints">
+          <div class="callout">
+            <h3>Multiple entry points are intentional</h3>
+            <p>Teams may come through the Hub when they have an idea, through a Hackathon email when a cohort is announced, or through a referral from a sponsor, SME, project lead or colleague. The readiness check creates a common standard after these different starting points.</p>
+          </div>
+          <div class="entry-grid">
+            <button class="entry-card" data-entry="hub">
+              <span class="step-no">3a</span>
+              <h3 class="card-title">AI Leap Hub</h3>
+              <p class="card-copy">The team visits the one-stop shop to test and route the idea.</p>
+            </button>
+            <button class="entry-card" data-entry="hackathon">
+              <span class="step-no">3b</span>
+              <h3 class="card-title">Hackathon announcement</h3>
+              <p class="card-copy">The team sees an email, Teams post or leadership invite and checks whether the idea fits.</p>
+            </button>
+            <button class="entry-card" data-entry="referral">
+              <span class="step-no">3c</span>
+              <h3 class="card-title">Referral</h3>
+              <p class="card-copy">An SME, partner, project lead or colleague points the team to AI Leap.</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="routes">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Route recommendation</h2>
+          <p class="section-subtitle">The route is based on objective readiness and practical context. The same front door can send a team to self-serve guidance, SME shaping, Studio, Hackathon or the backlog.</p>
+        </div>
+      </div>
+      <div class="common-grid">
+        <div class="route-grid" aria-label="Support route cards">
+          <button class="route-card active" data-route="studio">
+            <span class="step-no">S</span>
+            <h3 class="card-title">Leap Studio</h3>
+            <p class="card-copy">Best when the use case is ready, the team needs structured build support, and it should move now.</p>
+          </button>
+          <button class="route-card" data-route="hackathon">
+            <span class="step-no">H</span>
+            <h3 class="card-title">Leap Hackathon</h3>
+            <p class="card-copy">Best when the idea fits a theme or cohort window and benefits from peer learning and visibility.</p>
+          </button>
+          <button class="route-card" data-route="sme">
+            <span class="step-no">SME</span>
+            <h3 class="card-title">SME support</h3>
+            <p class="card-copy">Best when the idea is credible but needs challenge on value, data, tools, risk or feasibility.</p>
+          </button>
+          <button class="route-card" data-route="self">
+            <span class="step-no">SS</span>
+            <h3 class="card-title">Self-serve</h3>
+            <p class="card-copy">Best for early ideas where the team can keep shaping with templates, examples and guidance.</p>
+          </button>
+          <button class="route-card" data-route="backlog">
+            <span class="step-no">B</span>
+            <h3 class="card-title">Backlog or revisit</h3>
+            <p class="card-copy">Best when the idea has potential but lacks clarity, value, safe data path or accountable ownership.</p>
+          </button>
+        </div>
+
+        <div class="detail-panel" aria-live="polite">
+          <div class="detail-main">
+            <div class="detail-label" id="routeLabel">Recommended when</div>
+            <h3 class="detail-title" id="routeTitle">Leap Studio</h3>
+            <p class="detail-copy" id="routeCopy">The use case is ready to build, has a clear owner and sponsor, has a safe data path, and needs focused support to produce a working demo and business case within a short sprint window.</p>
+            <div class="tag-row" id="routeTags">
+              <span class="tag">Ready now</span><span class="tag">Clear owner</span><span class="tag">Structured build</span>
+            </div>
+          </div>
+          <div class="detail-side">
+            <div class="meta-grid">
+              <div class="meta-box">
+                <div class="meta-title">Trigger</div>
+                <p class="meta-text" id="routeTrigger">Team has a clear use case and wants to move now.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Support intensity</div>
+                <p class="meta-text" id="routeSupport">Medium to high. Structured sprint plus targeted SME support.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Output</div>
+                <p class="meta-text" id="routeOutput">Working demo, business case and next-step decision.</p>
+              </div>
+              <div class="meta-box">
+                <div class="meta-title">Risk if misrouted</div>
+                <p class="meta-text" id="routeRisk">Studio becomes generic office hours if readiness is too weak.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="criteria-table" aria-label="Routing criteria">
+          <thead>
+            <tr>
+              <th>Routing factor</th>
+              <th>What to check</th>
+              <th>Implication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Readiness</strong></td>
+              <td>Problem clarity, value case, owner, sponsor, data path, tooling path</td>
+              <td>High readiness points toward Studio or Hackathon. Low readiness points toward self-serve or SME shaping</td>
+            </tr>
+            <tr>
+              <td><strong>Support need</strong></td>
+              <td>How much structure, facilitation or specialist input the team needs</td>
+              <td>Light need can be self-serve. High need may require SME support or Studio</td>
+            </tr>
+            <tr>
+              <td><strong>Timing</strong></td>
+              <td>Whether the idea must move now or can wait for a cohort window</td>
+              <td>Urgent ready use cases fit Studio. Event-timed use cases may fit Hackathon</td>
+            </tr>
+            <tr>
+              <td><strong>Theme fit</strong></td>
+              <td>Whether the idea matches an active Hackathon theme, platform, client group or capability priority</td>
+              <td>Strong theme fit and cohort value point toward Hackathon</td>
+            </tr>
+            <tr>
+              <td><strong>Post-demo ownership</strong></td>
+              <td>Who will own the next step after the demo</td>
+              <td>No owner means no sprint until ownership is resolved</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="routeJourneys">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">What happens after routing</h2>
+          <p class="section-subtitle">Use the tabs to explore each route once the Hub, announcement or referral has brought the team into the common readiness process.</p>
+        </div>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Route journey tabs">
+        <button class="tab-btn active" data-tab="studioTab" role="tab" aria-selected="true">Leap Studio</button>
+        <button class="tab-btn" data-tab="hackathonTab" role="tab" aria-selected="false">Leap Hackathon</button>
+        <button class="tab-btn" data-tab="smeTab" role="tab" aria-selected="false">SME and self-serve</button>
+      </div>
+
+      <div class="route-section-body">
+        <div class="route-content active" id="studioTab" role="tabpanel">
+          <div class="route-intro">
+            <div class="callout">
+              <h3>Studio role</h3>
+              <p>Studio is the standard build route for ready use cases. It starts when the idea is ready, not when the next event window opens.</p>
+            </div>
+            <div class="flow-note"><span class="icon-dot">S</span><span><strong>Best fit:</strong> clear use case, committed owner, sponsor, safe data path, approved tools and a need to build now.</span></div>
+          </div>
+          <div class="route-journey" aria-label="Leap Studio journey">
+            <button class="mini-card active" data-route-step="studio-6">
+              <span class="step-no">6S</span>
+              <h3 class="card-title">Studio intake</h3>
+              <p class="card-copy">Confirm sponsor, owner, sprint brief, data and target output.</p>
+            </button>
+            <button class="mini-card" data-route-step="studio-7">
+              <span class="step-no">7S</span>
+              <h3 class="card-title">Sprint preparation</h3>
+              <p class="card-copy">Set up tools, roles, guardrails, access and demo expectations.</p>
+            </button>
+            <button class="mini-card" data-route-step="studio-8">
+              <span class="step-no">8S</span>
+              <h3 class="card-title">Studio sprint</h3>
+              <p class="card-copy">Build, test and refine with targeted SME support.</p>
+            </button>
+            <button class="mini-card" data-route-step="studio-9">
+              <span class="step-no">9S</span>
+              <h3 class="card-title">Demo and decision</h3>
+              <p class="card-copy">Show what works, what value it creates and what should happen next.</p>
+            </button>
+            <button class="mini-card" data-route-step="studio-10">
+              <span class="step-no">10S</span>
+              <h3 class="card-title">Adopt or scale</h3>
+              <p class="card-copy">Move to stop, iterate, pilot, scale or assetize with a named owner.</p>
+            </button>
+          </div>
+          <div class="detail-panel route-step-detail" aria-live="polite">
+            <div class="detail-main">
+              <div class="detail-label" id="routeStepLabel">Studio stage</div>
+              <h3 class="detail-title" id="routeStepTitle">Studio intake</h3>
+              <p class="detail-copy" id="routeStepCopy">The team confirms what it will build, who owns it, who sponsors it, what data and tools are needed, and what a successful demo should prove.</p>
+              <div class="tag-row" id="routeStepTags"><span class="tag">Sprint brief</span><span class="tag">Owner</span><span class="tag">Sponsor</span></div>
+            </div>
+            <div class="detail-side">
+              <div class="meta-grid">
+                <div class="meta-box"><div class="meta-title">Team action</div><p class="meta-text" id="routeStepTeam">Submit the intake and commit team availability.</p></div>
+                <div class="meta-box"><div class="meta-title">Leap action</div><p class="meta-text" id="routeStepLeap">Validate fit and confirm sprint setup.</p></div>
+                <div class="meta-box"><div class="meta-title">Output</div><p class="meta-text" id="routeStepOutput">Confirmed Studio sprint brief.</p></div>
+                <div class="meta-box"><div class="meta-title">Watchout</div><p class="meta-text" id="routeStepWatchout">Do not start Studio without a clear owner and a realistic demo target.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="route-content" id="hackathonTab" role="tabpanel">
+          <div class="route-intro">
+            <div class="callout red">
+              <h3>Hackathon role</h3>
+              <p>Hackathon is the occasional cohort route. It creates momentum, peer learning, leadership visibility and side-by-side comparison of use cases.</p>
+            </div>
+            <div class="flow-note"><span class="icon-dot">H</span><span><strong>Best fit:</strong> idea fits a theme or event window, team can commit to the timeline, and the output benefits from visibility and cohort energy.</span></div>
+          </div>
+          <div class="route-journey hackathon-journey" aria-label="Leap Hackathon journey">
+            <button class="mini-card active" data-route-step="hackathon-6">
+              <span class="step-no">6H</span>
+              <h3 class="card-title">Fit check</h3>
+              <p class="card-copy">Check theme, eligibility, timing, guardrails and output expectations.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-7">
+              <span class="step-no">7H</span>
+              <h3 class="card-title">Register interest</h3>
+              <p class="card-copy">Submit use case and participation details as a team or individual.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-8">
+              <span class="step-no">8H</span>
+              <h3 class="card-title">Review and selection</h3>
+              <p class="card-copy">Organizers assess value, feasibility, scalability, risk and fit.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-9">
+              <span class="step-no">9H</span>
+              <h3 class="card-title">Kickoff</h3>
+              <p class="card-copy">Teams align on rules, tools, timeline, checkpoints and outputs.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-10">
+              <span class="step-no">10H</span>
+              <h3 class="card-title">Build phase</h3>
+              <p class="card-copy">Teams ideate, build, test and refine with checkpoints and SMEs.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-11">
+              <span class="step-no">11H</span>
+              <h3 class="card-title">Submit final pack</h3>
+              <p class="card-copy">Submit prototype, business case and presentation.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-12">
+              <span class="step-no">12H</span>
+              <h3 class="card-title">Demo and jury</h3>
+              <p class="card-copy">Present to leadership or jury and receive feedback.</p>
+            </button>
+            <button class="mini-card" data-route-step="hackathon-13">
+              <span class="step-no">13H</span>
+              <h3 class="card-title">Package and scale</h3>
+              <p class="card-copy">Selected ideas get owners and move to pilot, assetization or validation.</p>
+            </button>
+          </div>
+          <div class="detail-panel route-step-detail" aria-live="polite">
+            <div class="detail-main">
+              <div class="detail-label" id="hackStepLabel">Hackathon stage</div>
+              <h3 class="detail-title" id="hackStepTitle">Fit check</h3>
+              <p class="detail-copy" id="hackStepCopy">The team checks whether the idea fits the Hackathon theme, eligibility rules, timeline, guardrails and expected deliverables.</p>
+              <div class="tag-row" id="hackStepTags"><span class="tag">Theme fit</span><span class="tag">Timeline</span><span class="tag">Guardrails</span></div>
+            </div>
+            <div class="detail-side">
+              <div class="meta-grid">
+                <div class="meta-box"><div class="meta-title">Team action</div><p class="meta-text" id="hackStepTeam">Review event page and confirm whether the idea fits.</p></div>
+                <div class="meta-box"><div class="meta-title">Leap action</div><p class="meta-text" id="hackStepLeap">Publish clear eligibility, dates, rules and outputs.</p></div>
+                <div class="meta-box"><div class="meta-title">Output</div><p class="meta-text" id="hackStepOutput">Decision to register or route elsewhere.</p></div>
+                <div class="meta-box"><div class="meta-title">Watchout</div><p class="meta-text" id="hackStepWatchout">Do not force ideas into a theme just because an event is visible.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="route-content" id="smeTab" role="tabpanel">
+          <div class="route-intro">
+            <div class="callout">
+              <h3>SME and self-serve role</h3>
+              <p>Not every idea should go straight into a sprint. Early or uncertain ideas should be shaped first, either through self-serve tools or targeted SME input.</p>
+            </div>
+            <div class="flow-note"><span class="icon-dot">?</span><span><strong>Best fit:</strong> the idea has potential but needs clearer value, sharper scope, safer data path, tooling advice or sponsor alignment.</span></div>
+          </div>
+          <table class="criteria-table" aria-label="SME and self-serve journey">
+            <thead>
+              <tr>
+                <th>Path</th>
+                <th>When it fits</th>
+                <th>What the team does</th>
+                <th>What happens next</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Self-serve guidance</strong></td>
+                <td>Idea is early, support need is low, or the team is still exploring the problem</td>
+                <td>Use AI Leap Hub templates, examples, readiness prompts and guardrails</td>
+                <td>Return to readiness check once the idea is clearer</td>
+              </tr>
+              <tr>
+                <td><strong>SME support</strong></td>
+                <td>Idea is credible but needs challenge on business value, data, tools, risk, feasibility or scale</td>
+                <td>Request targeted SME support with a short problem brief</td>
+                <td>Route to Studio, Hackathon, continued shaping or backlog</td>
+              </tr>
+              <tr>
+                <td><strong>Backlog or revisit</strong></td>
+                <td>Idea lacks a clear owner, value case, data path or realistic build target</td>
+                <td>Clarify missing conditions before asking for sprint support</td>
+                <td>Reassess when ownership, value or readiness improves</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">This prototype is designed as a discussion artifact for the AI Leap operating model. It can later be translated into the SharePoint AI Leap Hub experience, with the readiness check, intake forms, templates and use case library embedded directly into the site.</p>
+  </main>
+
+  <script>
+    const state = { view: 'user' };
+
+    const commonData = {
+      user: {
+        spot: {
+          label: 'User question',
+          title: 'Where could AI help us solve a real problem?',
+          copy: 'The journey starts with a specific client, delivery or internal pain point, not with a technology experiment. The team should identify where work is slow, repetitive, inconsistent, hard to scale or difficult to quality check.',
+          tags: ['Client problem', 'Delivery pain point', 'Internal workflow'],
+          team: 'Capture the pain point, affected users and why it matters.',
+          leap: 'No formal support yet. The model encourages problem-first thinking.',
+          output: 'Initial problem statement.',
+          watchout: 'Avoid starting with a tool looking for a problem.'
+        },
+        shape: {
+          label: 'User question',
+          title: 'What exactly are we trying to improve?',
+          copy: 'The team turns the opportunity into a clearer use case by describing the target user, current pain point, expected benefit, possible AI angle and what evidence would prove value.',
+          tags: ['Problem framing', 'Target user', 'Value hypothesis'],
+          team: 'Draft a simple use case statement and expected value.',
+          leap: 'No formal support unless the team asks for early SME input.',
+          output: 'Shaped AI idea ready for the Hub, Hackathon page or referral path.',
+          watchout: 'Do not over-engineer. The goal is enough clarity to assess fit and readiness.'
+        },
+        entry: {
+          label: 'User question',
+          title: 'How do we find the right entry point?',
+          copy: 'The team may arrive through the AI Leap Hub, a Hackathon announcement, or a referral from an SME, sponsor, project lead or colleague. These routes are all valid and should converge into the same readiness process.',
+          tags: ['Hub', 'Announcement', 'Referral'],
+          team: 'Choose the entry point that matches how they found AI Leap.',
+          leap: 'Make each entry point point back to common readiness criteria.',
+          output: 'Team enters the AI Leap process.',
+          watchout: 'Avoid creating separate standards for Studio and Hackathon submissions.'
+        },
+        readiness: {
+          label: 'User question',
+          title: 'Is this idea ready, and what support does it need?',
+          copy: 'The idea is checked against problem clarity, value, owner, sponsor, data path, approved tools, risk, feasibility, urgency, theme fit and support need.',
+          tags: ['Readiness check', 'Guardrails', 'Support need'],
+          team: 'Complete the readiness check and provide missing detail where needed.',
+          leap: 'Review readiness and identify gaps or routing signals.',
+          output: 'Readiness profile and recommended next step.',
+          watchout: 'Readiness should be a quality filter, not a bureaucratic obstacle.'
+        },
+        route: {
+          label: 'User question',
+          title: 'What is the right next step?',
+          copy: 'AI Leap routes the idea to self-serve guidance, SME support, Leap Studio, Leap Hackathon or backlog. The decision should reflect readiness, support need, timing, theme fit and ownership.',
+          tags: ['Self-serve', 'SME support', 'Studio', 'Hackathon', 'Backlog'],
+          team: 'Accept the recommendation or clarify why another route is needed.',
+          leap: 'Confirm route, owner, next step and timeline.',
+          output: 'Clear path forward with accountable owner.',
+          watchout: 'Do not let promising ideas enter a sprint without post-demo ownership.'
+        }
+      },
+      ops: {
+        spot: {
+          label: 'Leap team view',
+          title: 'Create demand without encouraging vague AI experiments',
+          copy: 'The operating model should encourage teams to start from real work problems and measurable value. This keeps the intake funnel relevant and avoids generic AI idea submissions.',
+          tags: ['Problem-first', 'Value-led', 'Practical'],
+          team: 'Promote examples of real problems where AI could help.',
+          leap: 'Set messaging that AI Leap supports delivery and client value, not abstract experimentation.',
+          output: 'Better quality top-of-funnel demand.',
+          watchout: 'Too much AI hype creates low-quality intake.'
+        },
+        shape: {
+          label: 'Leap team view',
+          title: 'Give teams just enough structure before intake',
+          copy: 'Teams should have a lightweight way to shape their idea before asking for formal support. The Hub can later provide a simple idea canvas, but the first thinking should remain problem-led.',
+          tags: ['Idea canvas', 'Value prompt', 'Scope prompt'],
+          team: 'Use simple prompts to define problem, user, value and AI angle.',
+          leap: 'Prepare lightweight shaping guidance and examples.',
+          output: 'More consistent submissions.',
+          watchout: 'Do not make shaping so heavy that teams avoid submitting.'
+        },
+        entry: {
+          label: 'Leap team view',
+          title: 'Unify multiple entry points behind one standard',
+          copy: 'Hub, Hackathon comms and referrals should all bring teams into a common readiness check. This allows flexible discovery while preserving quality control.',
+          tags: ['Common standard', 'Flexible discovery', 'Single intake logic'],
+          team: 'Enter through Hub, announcement or referral.',
+          leap: 'Ensure each entry point links to the same readiness logic and route rules.',
+          output: 'Consistent routing despite multiple discovery paths.',
+          watchout: 'Avoid parallel processes that compete with the Hub.'
+        },
+        readiness: {
+          label: 'Leap team view',
+          title: 'Use readiness as the quality control point',
+          copy: 'Readiness should check problem clarity, owner, sponsor, safe data, approved tooling, feasibility, value and support needs. It should produce a recommendation, not just a score.',
+          tags: ['Triage', 'Readiness', 'Recommendation'],
+          team: 'Provide information needed for triage.',
+          leap: 'Triage ideas and route them consistently.',
+          output: 'Actionable route recommendation.',
+          watchout: 'Scoring without judgment will miss context.'
+        },
+        route: {
+          label: 'Leap team view',
+          title: 'Route ideas based on need, not preference',
+          copy: 'Teams may prefer the most visible or supported option, but AI Leap should route based on readiness, urgency, event fit and ownership. This protects the capacity of Studio and SMEs.',
+          tags: ['Capacity control', 'Route discipline', 'Ownership'],
+          team: 'Follow the recommended path or resolve gaps first.',
+          leap: 'Make the route decision, explain rationale and confirm accountable next steps.',
+          output: 'Right support for the right use case.',
+          watchout: 'Open access to high-touch support will dilute quality fast.'
+        }
+      }
+    };
+
+    const entryData = {
+      hub: {
+        title: 'AI Leap Hub',
+        copy: 'The team has an idea and goes to the one-stop shop. The Hub provides readiness questions, templates, route logic and access to support.',
+        tags: ['Primary front door', 'Readiness check', 'Resources'],
+        team: 'Start the readiness check from the Hub.',
+        leap: 'Keep guidance, templates and route criteria current.',
+        output: 'Idea enters common intake and routing.',
+        watchout: 'The Hub should not become a static file library.'
+      },
+      hackathon: {
+        title: 'Hackathon announcement',
+        copy: 'The team sees a Hackathon email, Teams post, Viva post or leadership announcement. The announcement should help the team test whether its idea fits the theme and timeline.',
+        tags: ['Email', 'Teams post', 'Leadership invite'],
+        team: 'Review theme, eligibility, timeline and expected outputs.',
+        leap: 'Link the announcement back to the Hackathon page and readiness logic.',
+        output: 'Decision to register, shape further or route elsewhere.',
+        watchout: 'Visibility should not override fit. Not every idea belongs in the Hackathon.'
+      },
+      referral: {
+        title: 'Referral',
+        copy: 'An SME, partner, project lead or colleague sees potential and points the team to AI Leap. This is useful for surfacing strong ideas that would not naturally find the Hub.',
+        tags: ['SME', 'Partner', 'Project lead'],
+        team: 'Follow the referral and complete the readiness check.',
+        leap: 'Give referrers a simple way to direct teams into the process.',
+        output: 'Referred idea enters common readiness process.',
+        watchout: 'Referrals still need to meet the same readiness standard.'
+      }
+    };
+
+    const routeData = {
+      studio: {
+        title: 'Leap Studio',
+        copy: 'The use case is ready to build, has a clear owner and sponsor, has a safe data path, and needs focused support to produce a working demo and business case within a short sprint window.',
+        tags: ['Ready now', 'Clear owner', 'Structured build'],
+        trigger: 'Team has a clear use case and wants to move now.',
+        support: 'Medium to high. Structured sprint plus targeted SME support.',
+        output: 'Working demo, business case and next-step decision.',
+        risk: 'Studio becomes generic office hours if readiness is too weak.'
+      },
+      hackathon: {
+        title: 'Leap Hackathon',
+        copy: 'The idea fits an active theme or cohort window, the team can commit to the event timeline, and the output would benefit from peer learning, leadership visibility and a shared demo moment.',
+        tags: ['Theme fit', 'Cohort event', 'Visibility'],
+        trigger: 'Hackathon theme or leadership event creates a time-boxed opportunity.',
+        support: 'Medium. Structured event, checkpoints and selected SME support.',
+        output: 'Prototype, business case, demo and jury feedback.',
+        risk: 'Can become a one-off event unless post-event ownership is explicit.'
+      },
+      sme: {
+        title: 'SME support',
+        copy: 'The idea is credible but needs targeted challenge before it is ready for a build route. The support may focus on value, scope, data, tools, risk, feasibility or scalability.',
+        tags: ['Shape further', 'Targeted expert input', 'Reduce risk'],
+        trigger: 'Team has potential but needs specialist input before sprinting.',
+        support: 'Low to medium. Time-boxed SME input, not open-ended coaching.',
+        output: 'Sharper use case and route recommendation.',
+        risk: 'Unbounded SME support becomes a bottleneck.'
+      },
+      self: {
+        title: 'Self-serve guidance',
+        copy: 'The idea is early or the team can shape it independently using templates, examples, readiness prompts and guardrails in the AI Leap Hub.',
+        tags: ['Early idea', 'Templates', 'Low support need'],
+        trigger: 'Team needs guidance but not direct support yet.',
+        support: 'Low. Hub content, templates and examples.',
+        output: 'Better shaped idea or decision to stop.',
+        risk: 'Self-serve content becomes outdated if no one owns it.'
+      },
+      backlog: {
+        title: 'Backlog or revisit',
+        copy: 'The idea may be interesting, but it is not ready for support. Typical gaps include unclear owner, weak value case, unsafe data path, unresolved risk or no realistic demo target.',
+        tags: ['Not ready', 'Resolve gaps', 'Reassess later'],
+        trigger: 'Material readiness gaps prevent action.',
+        support: 'Low. Clear feedback on what must change.',
+        output: 'Backlog entry or explicit stop decision.',
+        risk: 'Keeping every weak idea alive creates noise.'
+      }
+    };
+
+    const studioSteps = {
+      'studio-6': {
+        label: 'Studio stage', title: 'Studio intake', copy: 'The team confirms what it will build, who owns it, who sponsors it, what data and tools are needed, and what a successful demo should prove.',
+        tags: ['Sprint brief', 'Owner', 'Sponsor'], team: 'Submit the intake and commit team availability.', leap: 'Validate fit and confirm sprint setup.', output: 'Confirmed Studio sprint brief.', watchout: 'Do not start Studio without a clear owner and a realistic demo target.'
+      },
+      'studio-7': {
+        label: 'Studio stage', title: 'Sprint preparation', copy: 'Before Day 1, the team and Leap support confirm access, tools, data, guardrails, working rhythm, roles and demo expectations.',
+        tags: ['Day 0 readiness', 'Access', 'Guardrails'], team: 'Prepare data, access requests, roles and target demo.', leap: 'Confirm tools, SMEs, facilitation and constraints.', output: 'Ready-to-build setup.', watchout: 'Unresolved access issues can consume the sprint.'
+      },
+      'studio-8': {
+        label: 'Studio stage', title: 'Studio sprint', copy: 'The team builds, tests and refines a working demo or prototype, with targeted support rather than open-ended coaching.',
+        tags: ['Build', 'Test', 'Refine'], team: 'Build the demo, test with users or realistic scenarios, and document assumptions.', leap: 'Facilitate sprint rhythm and unblock critical issues.', output: 'Working demo or prototype.', watchout: 'Do not let the sprint drift into broad exploration.'
+      },
+      'studio-9': {
+        label: 'Studio stage', title: 'Demo and decision', copy: 'The team shows what works, what value it could create, what risks remain and what decision is needed.',
+        tags: ['Demo', 'Business case', 'Decision'], team: 'Present demo, value case and recommendation.', leap: 'Capture decision and next-step owner.', output: 'Decision to stop, iterate, pilot, scale or assetize.', watchout: 'A good demo without a decision is not a successful sprint.'
+      },
+      'studio-10': {
+        label: 'Studio stage', title: 'Adopt or scale', copy: 'The owner drives the agreed next step after the demo. AI Leap captures the output for the use case library and follows up on progress.',
+        tags: ['Handoff', 'Owner', 'Follow-up'], team: 'Move the use case into pilot, adoption, scaling or closure.', leap: 'Log the case, collect learnings and check progress after 4 to 6 weeks.', output: 'Evidence of adoption, scaling or closure.', watchout: 'Post-demo ownership must be explicit before the sprint starts.'
+      }
+    };
+
+    const hackSteps = {
+      'hackathon-6': {
+        label: 'Hackathon stage', title: 'Fit check', copy: 'The team checks whether the idea fits the Hackathon theme, eligibility rules, timeline, guardrails and expected deliverables.',
+        tags: ['Theme fit', 'Timeline', 'Guardrails'], team: 'Review event page and confirm whether the idea fits.', leap: 'Publish clear eligibility, dates, rules and outputs.', output: 'Decision to register or route elsewhere.', watchout: 'Do not force ideas into a theme just because an event is visible.'
+      },
+      'hackathon-7': {
+        label: 'Hackathon stage', title: 'Register interest', copy: 'Teams or individuals submit their use case, participants, skills, sponsor or client context, and expected value.',
+        tags: ['Registration', 'Use case', 'Team'], team: 'Submit use case and participant details.', leap: 'Collect registrations and identify incomplete submissions.', output: 'Registration record.', watchout: 'The form should capture enough to assess fit without becoming burdensome.'
+      },
+      'hackathon-8': {
+        label: 'Hackathon stage', title: 'Review and selection', copy: 'Organizers review submissions for value, feasibility, scalability, risk, data readiness, tooling fit and cohort balance.',
+        tags: ['Selection', 'Value', 'Feasibility'], team: 'Respond to clarifications if needed.', leap: 'Approve, reject, merge or redirect submissions.', output: 'Confirmed cohort and use cases.', watchout: 'Approval should not be guaranteed just because a team registered.'
+      },
+      'hackathon-9': {
+        label: 'Hackathon stage', title: 'Kickoff', copy: 'Teams align on objectives, rules, tooling, timeline, checkpoints, expected deliverables, evaluation criteria and support model.',
+        tags: ['Kickoff', 'Rules', 'Outputs'], team: 'Join kickoff and confirm working plan.', leap: 'Set expectations and provide templates.', output: 'Cohort starts with shared standards.', watchout: 'A vague kickoff leads to inconsistent final outputs.'
+      },
+      'hackathon-10': {
+        label: 'Hackathon stage', title: 'Build phase', copy: 'Teams ideate, build, test and refine through the event window, using checkpoints and SME support to remove major blockers.',
+        tags: ['Build', 'Checkpoints', 'Peer learning'], team: 'Progress prototype and business case between checkpoints.', leap: 'Run checkpoints, answer questions and manage blockers.', output: 'Prototype progress and clearer value case.', watchout: 'Frequent individual coaching may not be realistic. Design for scalable support.'
+      },
+      'hackathon-11': {
+        label: 'Hackathon stage', title: 'Submit final pack', copy: 'Teams submit the working prototype, documented business case, solution approach, demo and next-step recommendation.',
+        tags: ['Prototype', 'Business case', 'Presentation'], team: 'Submit final materials by deadline.', leap: 'Check completeness and prepare evaluation materials.', output: 'Final submission pack.', watchout: 'Submission templates should be shared early, not at the end.'
+      },
+      'hackathon-12': {
+        label: 'Hackathon stage', title: 'Demo and jury', copy: 'Teams present to leadership or jury. Evaluation considers business value, innovation, feasibility and scalability.',
+        tags: ['Demo', 'Jury', 'Feedback'], team: 'Present demo and answer questions.', leap: 'Run event, capture feedback and document outcomes.', output: 'Evaluation results and feedback.', watchout: 'A competition format should not obscure real follow-up value.'
+      },
+      'hackathon-13': {
+        label: 'Hackathon stage', title: 'Package and scale', copy: 'Selected ideas are assigned owners and moved to pilot, assetization, client validation, project add-on, RFP input or closure.',
+        tags: ['Owner', 'Scale', 'Assetize'], team: 'Continue only if there is a clear owner and next step.', leap: 'Package outputs, socialize with stakeholders and review after 4 to 6 weeks.', output: 'Follow-up path for selected ideas.', watchout: 'The Hackathon should not end with the final pitch.'
+      }
+    };
+
+    function tagsHtml(tags) {
+      return tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    }
+
+    function setCommonDetail(key) {
+      const data = commonData[state.view][key];
+      document.getElementById('detailLabel').textContent = data.label;
+      document.getElementById('detailTitle').textContent = data.title;
+      document.getElementById('detailCopy').textContent = data.copy;
+      document.getElementById('detailTags').innerHTML = tagsHtml(data.tags);
+      document.getElementById('teamAction').textContent = data.team;
+      document.getElementById('leapAction').textContent = data.leap;
+      document.getElementById('outputText').textContent = data.output;
+      document.getElementById('watchoutText').textContent = data.watchout;
+    }
+
+    function setEntryDetail(key) {
+      const data = entryData[key];
+      document.getElementById('detailLabel').textContent = 'Entry point';
+      document.getElementById('detailTitle').textContent = data.title;
+      document.getElementById('detailCopy').textContent = data.copy;
+      document.getElementById('detailTags').innerHTML = tagsHtml(data.tags);
+      document.getElementById('teamAction').textContent = data.team;
+      document.getElementById('leapAction').textContent = data.leap;
+      document.getElementById('outputText').textContent = data.output;
+      document.getElementById('watchoutText').textContent = data.watchout;
+    }
+
+    function setRouteDetail(key) {
+      const data = routeData[key];
+      document.getElementById('routeTitle').textContent = data.title;
+      document.getElementById('routeCopy').textContent = data.copy;
+      document.getElementById('routeTags').innerHTML = tagsHtml(data.tags);
+      document.getElementById('routeTrigger').textContent = data.trigger;
+      document.getElementById('routeSupport').textContent = data.support;
+      document.getElementById('routeOutput').textContent = data.output;
+      document.getElementById('routeRisk').textContent = data.risk;
+    }
+
+    function setRouteStep(prefix, key) {
+      const data = prefix === 'studio' ? studioSteps[key] : hackSteps[key];
+      const ids = prefix === 'studio'
+        ? ['routeStepLabel','routeStepTitle','routeStepCopy','routeStepTags','routeStepTeam','routeStepLeap','routeStepOutput','routeStepWatchout']
+        : ['hackStepLabel','hackStepTitle','hackStepCopy','hackStepTags','hackStepTeam','hackStepLeap','hackStepOutput','hackStepWatchout'];
+      document.getElementById(ids[0]).textContent = data.label;
+      document.getElementById(ids[1]).textContent = data.title;
+      document.getElementById(ids[2]).textContent = data.copy;
+      document.getElementById(ids[3]).innerHTML = tagsHtml(data.tags);
+      document.getElementById(ids[4]).textContent = data.team;
+      document.getElementById(ids[5]).textContent = data.leap;
+      document.getElementById(ids[6]).textContent = data.output;
+      document.getElementById(ids[7]).textContent = data.watchout;
+    }
+
+    document.querySelectorAll('.step-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.step-card').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.entry-card').forEach(b => b.classList.remove('active'));
+        setCommonDetail(btn.dataset.common);
+      });
+    });
+
+    document.querySelectorAll('.entry-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.entry-card').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.step-card').forEach(b => b.classList.remove('active'));
+        document.querySelector('.step-card[data-common="entry"]').classList.add('active');
+        setEntryDetail(btn.dataset.entry);
+      });
+    });
+
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.view = btn.dataset.view;
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const activeCommon = document.querySelector('.step-card.active');
+        if (activeCommon) setCommonDetail(activeCommon.dataset.common);
+      });
+    });
+
+    document.querySelectorAll('.route-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.route-card').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setRouteDetail(btn.dataset.route);
+      });
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.route-content').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('[data-route-step]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('.route-content');
+        parent.querySelectorAll('.mini-card').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.dataset.routeStep;
+        setRouteStep(key.startsWith('studio') ? 'studio' : 'hackathon', key);
+      });
+    });
+  </script>
+</body>
+</html>
