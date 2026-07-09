@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Leap user journey</title>
+  <style>
+    :root {
+      --ink: #211f1f;
+      --charcoal: #2b2928;
+      --muted: #6d6661;
+      --paper: #f6f1eb;
+      --paper-2: #fffaf4;
+      --line: #dfd7ce;
+      --line-dark: #cbbfb3;
+      --orange: #e45f1b;
+      --deep-orange: #c74614;
+      --amber: #f4b23d;
+      --coral: #d85646;
+      --rose: #b45a64;
+      --burgundy: #6f2d3a;
+      --plum: #4b2f3f;
+      --bluegrey: #667780;
+      --green: #557466;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(43, 41, 40, 0.12);
+      --shadow-soft: 0 8px 22px rgba(43, 41, 40, 0.08);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --font-display: Georgia, "Times New Roman", serif;
+      --font-body: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(228, 95, 27, 0.10), transparent 30%),
+        linear-gradient(135deg, #fbf7f2 0%, #f4eee7 48%, #fbf7f2 100%);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.45;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      background-image:
+        linear-gradient(rgba(43,41,40,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,41,40,0.02) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      z-index: -1;
+    }
+
+    .page {
+      width: min(1720px, calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 38px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.55fr);
+      gap: 26px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-main {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 34px 38px 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -90px;
+      width: 260px;
+      height: 260px;
+      background:
+        linear-gradient(135deg, var(--orange), var(--amber));
+      transform: rotate(12deg);
+      opacity: 0.95;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      right: 76px;
+      bottom: -78px;
+      width: 180px;
+      height: 180px;
+      background: var(--burgundy);
+      opacity: 0.9;
+      transform: rotate(22deg);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: #ffd5bf;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 6px;
+      background: var(--orange);
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(42px, 5vw, 78px);
+      line-height: 0.97;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-main p {
+      margin: 18px 0 0;
+      max-width: 760px;
+      color: rgba(255,255,255,0.84);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .hero-aside {
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(203, 191, 179, 0.9);
+      padding: 26px 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .principle-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--burgundy);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .principle-title::before {
+      content: "";
+      width: 12px;
+      height: 34px;
+      background: linear-gradient(to bottom, var(--orange), var(--amber));
+      display: inline-block;
+    }
+
+    .hero-aside h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-aside p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .route-mini {
+      display: grid;
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .route-chip {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .route-chip span:first-child {
+      display: block;
+      width: 10px;
+      height: 46px;
+      border-radius: 99px;
+      background: var(--orange);
+    }
+
+    .route-chip.studio span:first-child { background: var(--orange); }
+    .route-chip.hack span:first-child { background: var(--burgundy); }
+    .route-chip.other span:first-child { background: var(--bluegrey); }
+
+    .route-chip strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .route-chip small {
+      display: block;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .section-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      margin: 22px 0 12px;
+    }
+
+    .section-bar h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.015em;
+    }
+
+    .section-bar p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .view-tools {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .view-note {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .toggle {
+      display: inline-flex;
+      background: var(--white);
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      padding: 4px;
+      box-shadow: 0 2px 8px rgba(43,41,40,0.05);
+    }
+
+    .toggle button {
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .toggle button:hover {
+      transform: translateY(-1px);
+      color: var(--ink);
+    }
+
+    .toggle button.active {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .journey-shell {
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.84);
+      border: 1px solid var(--line-dark);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .journey-scroll {
+      overflow-x: auto;
+      scrollbar-color: var(--line-dark) transparent;
+    }
+
+    .journey-grid {
+      min-width: 1500px;
+      display: grid;
+      grid-template-columns: 172px repeat(10, minmax(122px, 1fr));
+      grid-template-rows: 74px repeat(4, minmax(118px, auto));
+    }
+
+    .corner,
+    .stage-head,
+    .row-label,
+    .journey-cell {
+      border-right: 1px solid rgba(203,191,179,0.65);
+      border-bottom: 1px solid rgba(203,191,179,0.65);
+    }
+
+    .corner {
+      background: var(--paper-2);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-weight: 900;
+    }
+
+    .stage-head {
+      position: relative;
+      background: #f9f4ee;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .stage-head::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--line-dark);
+    }
+
+    .stage-head.common::before { background: var(--orange); }
+    .stage-head.route::before { background: linear-gradient(90deg, var(--orange), var(--burgundy), var(--bluegrey)); }
+
+    .stage-head strong {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      color: white;
+      font-size: 14px;
+    }
+
+    .stage-head small {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.15;
+    }
+
+    .row-label {
+      position: relative;
+      background: var(--paper-2);
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .row-label::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 7px;
+      background: var(--line-dark);
+    }
+
+    .row-label.common::before { background: var(--orange); }
+    .row-label.studio::before { background: var(--deep-orange); }
+    .row-label.hack::before { background: var(--burgundy); }
+    .row-label.other::before { background: var(--bluegrey); }
+
+    .row-label strong {
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .row-label small {
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .journey-cell {
+      position: relative;
+      min-height: 118px;
+      padding: 10px;
+      background: #fffdf9;
+    }
+
+    .journey-cell.empty {
+      background:
+        linear-gradient(135deg, rgba(203,191,179,0.18) 25%, transparent 25%) 0 0 / 14px 14px,
+        #fbf7f1;
+    }
+
+    .journey-cell.empty::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 50%;
+      border-top: 1px dashed rgba(109,102,97,0.36);
+    }
+
+    .stage-card {
+      width: 100%;
+      height: 100%;
+      min-height: 96px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 12px 12px 10px;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(43,41,40,0.04);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      outline: none;
+    }
+
+    .stage-card:hover,
+    .stage-card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(43,41,40,0.12);
+      border-color: rgba(43,41,40,0.36);
+      background: #fffaf4;
+    }
+
+    .stage-card.active {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(228,95,27,0.22), 0 14px 30px rgba(43,41,40,0.16);
+    }
+
+    .card-kicker {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-weight: 900;
+    }
+
+    .card-kicker::after {
+      content: "";
+      width: 24px;
+      height: 8px;
+      border-radius: 20px;
+      background: var(--orange);
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .stage-card.studio .card-kicker::after { background: var(--deep-orange); }
+    .stage-card.hack .card-kicker::after { background: var(--burgundy); }
+    .stage-card.other .card-kicker::after { background: var(--bluegrey); }
+
+    .stage-card h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .stage-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .decision-card {
+      background: #2b2928;
+      color: var(--white);
+      border-color: #2b2928;
+    }
+
+    .decision-card p {
+      color: rgba(255,255,255,0.76);
+    }
+
+    .decision-card .card-kicker {
+      color: #ffd4c1;
+    }
+
+    .branch-marker {
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      z-index: 1;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      transform: translateY(-50%);
+      box-shadow: 0 8px 18px rgba(43,41,40,0.22);
+    }
+
+    .detail-panel {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+      gap: 0;
+      border-top: 1px solid var(--line-dark);
+      background: #fffaf4;
+    }
+
+    .detail-title {
+      padding: 26px 28px;
+      border-right: 1px solid var(--line-dark);
+      background:
+        linear-gradient(180deg, rgba(228,95,27,0.12), transparent 58%),
+        #fffaf4;
+    }
+
+    .detail-title .selected-label {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .detail-title h2 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.04;
+    }
+
+    .detail-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .detail-content {
+      padding: 22px 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .detail-box {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.86);
+      border-radius: 16px;
+      padding: 15px;
+      min-height: 130px;
+    }
+
+    .detail-box strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      color: var(--burgundy);
+    }
+
+    .detail-box p,
+    .detail-box li {
+      font-size: 14px;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .detail-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .entry-paths {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .entry-paths.visible {
+      display: grid;
+    }
+
+    .entry-card {
+      border: 1px solid var(--line-dark);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 16px;
+      box-shadow: 0 5px 14px rgba(43,41,40,0.05);
+    }
+
+    .entry-card .entry-number {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .entry-card:nth-child(2) .entry-number { background: var(--burgundy); }
+    .entry-card:nth-child(3) .entry-number { background: var(--bluegrey); }
+
+    .entry-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .entry-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line-dark);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      padding: 18px;
+    }
+
+    .summary-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .summary-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .route-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .tiny-pill {
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      padding: 7px 9px;
+      background: var(--paper-2);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 18px;
+      text-align: right;
+    }
+
+    @media (max-width: 1100px) {
+      .page {
+        width: min(100vw - 26px, 1720px);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .detail-panel,
+      .summary-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-title {
+        border-right: 0;
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .detail-grid,
+      .entry-paths {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero-main {
+        padding: 28px 24px;
+      }
+
+      .section-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .view-tools {
+        justify-content: flex-start;
+      }
+
+      .detail-grid,
+      .entry-paths {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-grid {
+        min-width: 1380px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-main">
+        <div class="hero-content">
+          <div class="eyebrow">AI Leap user journey</div>
+          <h1 id="page-title">Bring an AI idea to life</h1>
+          <p>Teams start with a real problem, shape it into a credible AI use case, then use AI Leap to assess readiness and route the idea to the right support path.</p>
+        </div>
+      </div>
+
+      <aside class="hero-aside" aria-label="Design principle">
+        <div>
+          <div class="principle-title">Journey logic</div>
+          <h2>Do not choose the route upfront</h2>
+          <p>The support path depends on readiness, urgency, support need, theme fit, team capacity, data route and ownership.</p>
+        </div>
+        <div class="route-mini" aria-label="Route summary">
+          <div class="route-chip studio"><span></span><div><strong>Leap Studio</strong><small>Default build route for ready use cases that need focused support now</small></div></div>
+          <div class="route-chip hack"><span></span><div><strong>Leap Hackathon</strong><small>Occasional cohort route when the idea fits a theme, timing and visibility need</small></div></div>
+          <div class="route-chip other"><span></span><div><strong>SME or self-serve</strong><small>Shaping route when the idea has potential but is not yet sprint-ready</small></div></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section-bar" aria-label="Journey controls">
+      <div>
+        <h2>Horizontal journey map</h2>
+        <p>Steps 1 to 5 are common. Steps 6 to 10 show the possible routes stacked vertically after the readiness check.</p>
+      </div>
+      <div class="view-tools">
+        <span class="view-note">Toggle the detail panel</span>
+        <div class="toggle" role="group" aria-label="Select view">
+          <button type="button" id="userViewBtn" class="active" aria-pressed="true">User view</button>
+          <button type="button" id="operatorViewBtn" aria-pressed="false">Leap team view</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="journey-shell" aria-label="Interactive AI Leap journey map">
+      <div class="journey-scroll" tabindex="0" aria-label="Scrollable journey map">
+        <div class="journey-grid">
+          <div class="corner">Path</div>
+          <div class="stage-head common"><strong>1</strong><small>Problem<br>spotted</small></div>
+          <div class="stage-head common"><strong>2</strong><small>Idea<br>shaped</small></div>
+          <div class="stage-head common"><strong>3</strong><small>Entry<br>found</small></div>
+          <div class="stage-head common"><strong>4</strong><small>Readiness<br>checked</small></div>
+          <div class="stage-head common"><strong>5</strong><small>Route<br>selected</small></div>
+          <div class="stage-head route"><strong>6</strong><small>Path<br>starts</small></div>
+          <div class="stage-head route"><strong>7</strong><small>Prepare<br>or select</small></div>
+          <div class="stage-head route"><strong>8</strong><small>Build<br>or shape</small></div>
+          <div class="stage-head route"><strong>9</strong><small>Demo<br>or review</small></div>
+          <div class="stage-head route"><strong>10</strong><small>Adopt<br>or revisit</small></div>
+
+          <div class="row-label common"><strong>Common path</strong><small>All ideas begin here before AI Leap recommends a route</small></div>
+          <div class="journey-cell"><button class="stage-card common active" data-step="1"><span class="card-kicker">Common</span><h3>Spot opportunity</h3><p>Identify a real client, delivery or internal problem where AI might help.</p></button></div>
+          <div class="journey-cell"><button class="stage-card common" data-step="2"><span class="card-kicker">Common</span><h3>Shape the idea</h3><p>Clarify the target user, problem, value, possible AI angle and expected output.</p></button></div>
+          <div class="journey-cell"><button class="stage-card common" data-step="3"><span class="card-kicker">Common</span><h3>Find entry point</h3><p>Come into AI Leap through the Hub, a Hackathon announcement or a referral.</p></button></div>
+          <div class="journey-cell"><button class="stage-card common" data-step="4"><span class="card-kicker">Common</span><h3>Check readiness</h3><p>Assess problem, output, data, tooling, owner, scope and support need.</p></button></div>
+          <div class="journey-cell"><button class="stage-card common decision-card" data-step="5"><span class="card-kicker">Decision</span><h3>Route recommendation</h3><p>AI Leap recommends Studio, Hackathon, SME support, self-serve or backlog.</p></button><div class="branch-marker" aria-hidden="true">↘</div></div>
+          <div class="journey-cell empty" aria-label="Common path branches after step 5"></div>
+          <div class="journey-cell empty" aria-label="Common path branches after step 5"></div>
+          <div class="journey-cell empty" aria-label="Common path branches after step 5"></div>
+          <div class="journey-cell empty" aria-label="Common path branches after step 5"></div>
+          <div class="journey-cell empty" aria-label="Common path branches after step 5"></div>
+
+          <div class="row-label studio"><strong>Leap Studio</strong><small>Default route for ready use cases that need a focused build sprint</small></div>
+          <div class="journey-cell empty" aria-label="Studio route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Studio route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Studio route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Studio route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Studio route starts after step 5"></div>
+          <div class="journey-cell"><button class="stage-card studio" data-step="6S"><span class="card-kicker">Studio</span><h3>Studio intake</h3><p>Confirm owner, sponsor, sprint brief, data route and target output.</p></button></div>
+          <div class="journey-cell"><button class="stage-card studio" data-step="7S"><span class="card-kicker">Studio</span><h3>Sprint preparation</h3><p>Line up access, tools, data, roles, guardrails and demo expectations.</p></button></div>
+          <div class="journey-cell"><button class="stage-card studio" data-step="8S"><span class="card-kicker">Studio</span><h3>Studio sprint</h3><p>Build, test and refine a working demo with targeted SME support.</p></button></div>
+          <div class="journey-cell"><button class="stage-card studio" data-step="9S"><span class="card-kicker">Studio</span><h3>Demo and decide</h3><p>Show what was proven and agree the next decision.</p></button></div>
+          <div class="journey-cell"><button class="stage-card studio" data-step="10S"><span class="card-kicker">Studio</span><h3>Adopt or scale</h3><p>Move to pilot, scale, assetization, iteration or stop.</p></button></div>
+
+          <div class="row-label hack"><strong>Leap Hackathon</strong><small>Cohort route for themed events, peer learning and visible momentum</small></div>
+          <div class="journey-cell empty" aria-label="Hackathon route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Hackathon route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Hackathon route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Hackathon route starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Hackathon route starts after step 5"></div>
+          <div class="journey-cell"><button class="stage-card hack" data-step="6H"><span class="card-kicker">Hackathon</span><h3>Fit check</h3><p>Confirm theme fit, eligibility, timing and expected deliverables.</p></button></div>
+          <div class="journey-cell"><button class="stage-card hack" data-step="7H"><span class="card-kicker">Hackathon</span><h3>Register and select</h3><p>Submit interest, form or match teams, then confirm accepted use cases.</p></button></div>
+          <div class="journey-cell"><button class="stage-card hack" data-step="8H"><span class="card-kicker">Hackathon</span><h3>Kickoff and build</h3><p>Join the cohort, work through checkpoints and build toward demo day.</p></button></div>
+          <div class="journey-cell"><button class="stage-card hack" data-step="9H"><span class="card-kicker">Hackathon</span><h3>Submit and demo</h3><p>Submit final pack and present the demo to jury or leadership.</p></button></div>
+          <div class="journey-cell"><button class="stage-card hack" data-step="10H"><span class="card-kicker">Hackathon</span><h3>Package and scale</h3><p>Assign owners and move strongest outputs into validation or reuse.</p></button></div>
+
+          <div class="row-label other"><strong>SME / self-serve</strong><small>Shaping path when the idea has promise but is not yet sprint-ready</small></div>
+          <div class="journey-cell empty" aria-label="Other support starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Other support starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Other support starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Other support starts after step 5"></div>
+          <div class="journey-cell empty" aria-label="Other support starts after step 5"></div>
+          <div class="journey-cell"><button class="stage-card other" data-step="6O"><span class="card-kicker">Shape</span><h3>Use guidance or SME help</h3><p>Use templates or targeted experts to close readiness gaps.</p></button></div>
+          <div class="journey-cell"><button class="stage-card other" data-step="7O"><span class="card-kicker">Shape</span><h3>Resolve gaps</h3><p>Tighten problem, value, scope, data route, owner or sponsor.</p></button></div>
+          <div class="journey-cell"><button class="stage-card other" data-step="8O"><span class="card-kicker">Shape</span><h3>Re-check readiness</h3><p>Run the assessment again once the team has addressed blockers.</p></button></div>
+          <div class="journey-cell"><button class="stage-card other" data-step="9O"><span class="card-kicker">Shape</span><h3>Select route</h3><p>Move into Studio, Hackathon, self-serve execution or backlog.</p></button></div>
+          <div class="journey-cell"><button class="stage-card other" data-step="10O"><span class="card-kicker">Shape</span><h3>Continue or pause</h3><p>Proceed only when the idea has a clear path and owner.</p></button></div>
+        </div>
+      </div>
+
+      <div class="detail-panel" aria-live="polite">
+        <div class="detail-title">
+          <span class="selected-label" id="selectedLabel">Step 1</span>
+          <h2 id="detailTitle">Spot opportunity</h2>
+          <p id="detailIntro">Identify a real problem before thinking about the route.</p>
+        </div>
+        <div class="detail-content">
+          <div class="detail-grid">
+            <div class="detail-box"><strong>User question</strong><p id="detailQuestion">Where could AI help us solve a real client, delivery or internal problem?</p></div>
+            <div class="detail-box"><strong>Team action</strong><p id="detailTeam">Name the pain point, who it affects, why it matters and what would improve if solved.</p></div>
+            <div class="detail-box"><strong>AI Leap role</strong><p id="detailLeap">Not involved yet. The team is still identifying whether there is a meaningful opportunity.</p></div>
+            <div class="detail-box"><strong>Output</strong><p id="detailOutput">A short opportunity statement that can be shaped into a use case.</p></div>
+          </div>
+
+          <div class="entry-paths" id="entryPaths" aria-label="Entry point options">
+            <div class="entry-card"><span class="entry-number">3a</span><h3>AI Leap Hub</h3><p>The team actively looks for where to take its idea and lands on the Hub.</p></div>
+            <div class="entry-card"><span class="entry-number">3b</span><h3>Hackathon announcement</h3><p>The team sees an email, Teams post or leadership message about an upcoming event.</p></div>
+            <div class="entry-card"><span class="entry-number">3c</span><h3>Referral</h3><p>An SME, partner, project lead or colleague points the team toward AI Leap.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-strip" aria-label="Executive summary">
+      <div class="summary-card">
+        <h3>Core message</h3>
+        <p>AI Leap is not asking teams to pick a process. It helps teams test readiness and route the idea to the right level of support.</p>
+      </div>
+      <div class="summary-card">
+        <h3>Routing factors</h3>
+        <div class="route-list" aria-label="Routing factors">
+          <span class="tiny-pill">Readiness</span>
+          <span class="tiny-pill">Urgency</span>
+          <span class="tiny-pill">Support need</span>
+          <span class="tiny-pill">Theme fit</span>
+          <span class="tiny-pill">Data route</span>
+          <span class="tiny-pill">Owner</span>
+        </div>
+      </div>
+      <div class="summary-card">
+        <h3>Practical use</h3>
+        <p>Use this as the front-end journey for the AI Leap Hub, then connect step 4 to the readiness assessment and intake workflow.</p>
+      </div>
+    </section>
+
+    <div class="footer-note">Standalone HTML prototype. No PwC logo or external assets included.</div>
+  </main>
+
+  <script>
+    const stages = {
+      "1": {
+        label: "Step 1",
+        title: "Spot opportunity",
+        intro: "Identify a real problem before thinking about the route.",
+        question: "Where could AI help us solve a real client, delivery or internal problem?",
+        team: "Name the pain point, who it affects, why it matters and what would improve if solved.",
+        leapUser: "Not involved yet. The team is still identifying whether there is a meaningful opportunity.",
+        leapOps: "No central action required. The model should encourage problem-led thinking through simple communications and examples.",
+        output: "A short opportunity statement that can be shaped into a use case.",
+        entries: false
+      },
+      "2": {
+        label: "Step 2",
+        title: "Shape the idea",
+        intro: "Turn the opportunity into an initial use case hypothesis.",
+        question: "What exactly are we trying to improve, for whom, and why does it matter?",
+        team: "Draft the target user, current pain point, expected output, potential value, rough data needs and likely AI angle.",
+        leapUser: "Not yet required. The team can shape enough detail before using the Hub or responding to an event.",
+        leapOps: "Provide light shaping prompts in comms and templates, but avoid forcing teams through a process too early.",
+        output: "A draft use case with enough clarity to assess fit and readiness.",
+        entries: false
+      },
+      "3": {
+        label: "Step 3",
+        title: "Find entry point",
+        intro: "Teams can arrive at AI Leap in more than one way.",
+        question: "Where do we take this idea next?",
+        team: "Enter through the AI Leap Hub, a Hackathon announcement, or a referral from an SME, partner, project lead or colleague.",
+        leapUser: "The entry point should feel simple regardless of how the team discovered AI Leap.",
+        leapOps: "Keep all entry points connected to the same readiness logic so routes are not selected prematurely.",
+        output: "The team reaches the shared assessment and routing process.",
+        entries: true
+      },
+      "4": {
+        label: "Step 4",
+        title: "Check fit and readiness",
+        intro: "Assess whether the idea is ready, what support it needs and whether any blockers exist.",
+        question: "Is this idea ready enough to build, or does it need shaping first?",
+        team: "Complete the readiness assessment across problem, output, tools and data, scope, owner, value, team, next step and stakeholder input.",
+        leapUser: "The Hub guides the team through a structured self-assessment and highlights gaps.",
+        leapOps: "Use the assessment result to manage quality, protect SME time and avoid launching weak sprints.",
+        output: "Readiness status, key gaps and a draft support recommendation.",
+        entries: false
+      },
+      "5": {
+        label: "Step 5",
+        title: "Route recommendation",
+        intro: "The support path is selected after the readiness check, not before it.",
+        question: "What is the best next step for this idea?",
+        team: "Review the recommended path and decide whether to proceed, shape further or pause.",
+        leapUser: "AI Leap recommends Studio, Hackathon, SME support, self-serve guidance or backlog based on evidence.",
+        leapOps: "Apply deterministic routing rules for hard gates, theme fit, urgency, support need and capacity.",
+        output: "Clear route recommendation with next action and owner.",
+        entries: false
+      },
+      "6S": {
+        label: "Step 6 · Studio",
+        title: "Studio intake",
+        intro: "Confirm that the use case is ready to enter the standard build route.",
+        question: "What do we need to commit before we build?",
+        team: "Submit the sprint brief, owner, sponsor, data route, tooling needs, target output and availability.",
+        leapUser: "Studio provides structure, facilitation and targeted support for a ready use case.",
+        leapOps: "Review the intake, confirm capacity and identify SMEs needed for the sprint.",
+        output: "Accepted Studio use case with confirmed owner, sponsor and sprint scope.",
+        entries: false
+      },
+      "7S": {
+        label: "Step 7 · Studio",
+        title: "Sprint preparation",
+        intro: "Remove friction before build time starts.",
+        question: "What must be ready before Day 1?",
+        team: "Confirm data, access, tools, roles, guardrails, baseline process and demo expectations.",
+        leapUser: "The team prepares with a clear checklist rather than losing sprint time to setup issues.",
+        leapOps: "Coordinate tool access, SME windows, workspace, agenda and risk or data checks.",
+        output: "Ready-to-build sprint package.",
+        entries: false
+      },
+      "8S": {
+        label: "Step 8 · Studio",
+        title: "Studio sprint",
+        intro: "Turn the use case into something demonstrable.",
+        question: "Can we build enough to prove the concept?",
+        team: "Build, test, refine and document the demo with focused support.",
+        leapUser: "Studio provides dedicated build time, facilitation and targeted SME input.",
+        leapOps: "Facilitate sprint rhythm, unblock issues and keep the team focused on the demo and business case.",
+        output: "Working demo or prototype plus emerging business case.",
+        entries: false
+      },
+      "9S": {
+        label: "Step 9 · Studio",
+        title: "Demo and decide",
+        intro: "Convert the build into a decision.",
+        question: "What have we proven and what should happen next?",
+        team: "Present the demo, value case, limitations and recommended next step.",
+        leapUser: "The demo creates a clear decision point rather than a vague showcase.",
+        leapOps: "Capture the decision, owner and follow-up route: stop, iterate, pilot, scale or assetize.",
+        output: "Decision record and named next-step owner.",
+        entries: false
+      },
+      "10S": {
+        label: "Step 10 · Studio",
+        title: "Adopt or scale",
+        intro: "Prevent the demo from dying after the sprint.",
+        question: "How do we make the output useful after the demo?",
+        team: "Move the output into pilot, scale, assetization, iteration or closure.",
+        leapUser: "The originating team stays accountable for follow-through.",
+        leapOps: "Track follow-up and review progress after an agreed period.",
+        output: "Adoption, scale path, or deliberate stop decision.",
+        entries: false
+      },
+      "6H": {
+        label: "Step 6 · Hackathon",
+        title: "Hackathon fit check",
+        intro: "Confirm whether the idea belongs in the cohort event.",
+        question: "Does our idea fit the theme, rules and timeline?",
+        team: "Check theme fit, eligibility, expected deliverables, timing, team availability and guardrails.",
+        leapUser: "The Hackathon route works when event timing and visibility add value.",
+        leapOps: "Publish clear theme, scope, rules, evaluation criteria and submission requirements.",
+        output: "Decision to register, shape further or use another support path.",
+        entries: false
+      },
+      "7H": {
+        label: "Step 7 · Hackathon",
+        title: "Register and select",
+        intro: "Build the cohort with the right teams and use cases.",
+        question: "Are we accepted into the cohort?",
+        team: "Register as a team or individual and submit the use case details.",
+        leapUser: "Teams understand whether they are in scope and what they need to prepare.",
+        leapOps: "Review submissions for value, feasibility, scalability, risk, theme fit and team composition.",
+        output: "Approved cohort, final teams and confirmed use cases.",
+        entries: false
+      },
+      "8H": {
+        label: "Step 8 · Hackathon",
+        title: "Kickoff and build",
+        intro: "Use the event structure to create momentum and peer learning.",
+        question: "How far can we get by the demo deadline?",
+        team: "Join kickoff, follow the timeline, attend checkpoints, build and refine the prototype.",
+        leapUser: "The event provides common deadlines, peer energy and structured support moments.",
+        leapOps: "Run kickoff, checkpoints, Q&A, SME panels and progress communications.",
+        output: "Prototype progress, resolved blockers and clearer demo story.",
+        entries: false
+      },
+      "9H": {
+        label: "Step 9 · Hackathon",
+        title: "Submit and demo",
+        intro: "Turn the cohort work into a visible decision moment.",
+        question: "What have we proven compared with other teams?",
+        team: "Submit the prototype, business case and presentation, then demo to jury or leadership.",
+        leapUser: "The team gets feedback, visibility and a clear evaluation outcome.",
+        leapOps: "Run submission tracking, jury briefing, demo event, scoring and communications.",
+        output: "Evaluated submissions and highlighted solutions.",
+        entries: false
+      },
+      "10H": {
+        label: "Step 10 · Hackathon",
+        title: "Package and scale",
+        intro: "Convert event momentum into usable assets or client opportunities.",
+        question: "Which outputs should continue after the event?",
+        team: "Work with owners to package the strongest ideas and agree next steps.",
+        leapUser: "Promising outputs move beyond recognition into validation, reuse or implementation.",
+        leapOps: "Assign owners, package demos and business cases, socialize with account teams and review progress.",
+        output: "Selected ideas moved to pilot, assetization, client validation or stop decision.",
+        entries: false
+      },
+      "6O": {
+        label: "Step 6 · Shape",
+        title: "Use guidance or SME help",
+        intro: "Use the right level of shaping support before sprinting.",
+        question: "What needs to be clarified before this can move forward?",
+        team: "Use self-serve templates or request targeted SME input on value, data, tooling, risk, scope or adoption.",
+        leapUser: "The team gets practical support without overcommitting to a sprint too early.",
+        leapOps: "Protect sprint capacity by helping credible but immature ideas mature first.",
+        output: "Clear list of readiness gaps to resolve.",
+        entries: false
+      },
+      "7O": {
+        label: "Step 7 · Shape",
+        title: "Resolve gaps",
+        intro: "Close the blockers identified by the readiness check.",
+        question: "What evidence or decision is missing?",
+        team: "Clarify the problem, narrow the scope, find the owner, confirm data or strengthen the value case.",
+        leapUser: "The idea becomes sharper and less risky before central support is committed.",
+        leapOps: "Provide templates, office-hour style support or a short SME shaping session.",
+        output: "Improved use case with fewer blockers.",
+        entries: false
+      },
+      "8O": {
+        label: "Step 8 · Shape",
+        title: "Re-check readiness",
+        intro: "Run the assessment again once blockers have been addressed.",
+        question: "Has the idea become sprint-ready?",
+        team: "Update the readiness assessment and confirm whether hard gates are green.",
+        leapUser: "The team can see whether the idea has moved from vague to actionable.",
+        leapOps: "Use the re-check to decide whether to route, keep shaping or close the idea.",
+        output: "Updated readiness status.",
+        entries: false
+      },
+      "9O": {
+        label: "Step 9 · Shape",
+        title: "Select route",
+        intro: "Choose the path only once the idea is clear enough.",
+        question: "What support path now fits best?",
+        team: "Move to Studio, Hackathon, self-serve execution or backlog based on the updated assessment.",
+        leapUser: "The route is evidence-based rather than preference-based.",
+        leapOps: "Apply the same triage logic across all use cases.",
+        output: "Confirmed route or deliberate pause.",
+        entries: false
+      },
+      "10O": {
+        label: "Step 10 · Shape",
+        title: "Continue or pause",
+        intro: "Do not force weak ideas through the system.",
+        question: "Should we continue, wait or stop?",
+        team: "Proceed if there is a clear owner, value case and safe route. Otherwise pause or close.",
+        leapUser: "A pause is treated as quality control, not failure.",
+        leapOps: "Maintain a backlog and avoid spending central capacity on ideas without a path.",
+        output: "Proceed, backlog, revisit or stop decision.",
+        entries: false
+      }
+    };
+
+    let currentView = "user";
+    let activeStep = "1";
+
+    const cards = document.querySelectorAll(".stage-card");
+    const label = document.getElementById("selectedLabel");
+    const title = document.getElementById("detailTitle");
+    const intro = document.getElementById("detailIntro");
+    const question = document.getElementById("detailQuestion");
+    const team = document.getElementById("detailTeam");
+    const leap = document.getElementById("detailLeap");
+    const output = document.getElementById("detailOutput");
+    const entryPaths = document.getElementById("entryPaths");
+    const userBtn = document.getElementById("userViewBtn");
+    const operatorBtn = document.getElementById("operatorViewBtn");
+
+    function renderDetail(stepId) {
+      const data = stages[stepId];
+      if (!data) return;
+      activeStep = stepId;
+      cards.forEach(card => card.classList.toggle("active", card.dataset.step === stepId));
+      label.textContent = data.label;
+      title.textContent = data.title;
+      intro.textContent = data.intro;
+      question.textContent = data.question;
+      team.textContent = data.team;
+      leap.textContent = currentView === "user" ? data.leapUser : data.leapOps;
+      output.textContent = data.output;
+      entryPaths.classList.toggle("visible", Boolean(data.entries));
+    }
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => renderDetail(card.dataset.step));
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          renderDetail(card.dataset.step);
+        }
+      });
+    });
+
+    userBtn.addEventListener("click", () => {
+      currentView = "user";
+      userBtn.classList.add("active");
+      operatorBtn.classList.remove("active");
+      userBtn.setAttribute("aria-pressed", "true");
+      operatorBtn.setAttribute("aria-pressed", "false");
+      renderDetail(activeStep);
+    });
+
+    operatorBtn.addEventListener("click", () => {
+      currentView = "operator";
+      operatorBtn.classList.add("active");
+      userBtn.classList.remove("active");
+      operatorBtn.setAttribute("aria-pressed", "true");
+      userBtn.setAttribute("aria-pressed", "false");
+      renderDetail(activeStep);
+    });
+  </script>
+</body>
+</html>
